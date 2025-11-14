@@ -1,5 +1,5 @@
-const captionController = require('../controllers/captionController.js');
-const sentimentController = require('../controllers/sentimentController.js');
+const {captionTool} = require('../controllers/captionTool.js');
+const { sentimentTool } = require('../controllers/sentimentTool.js');
 
 // --> handler function for /tools/call - executes a tool based on the request body
 const getMcpToolsExecute = async (req, res) => {
@@ -20,7 +20,7 @@ const getMcpToolsExecute = async (req, res) => {
         console.log("Going to process caption tool with request:");
         const captionArgs = processRequestForImageData(req);
         console.log("Caption tool args constructed:", captionArgs);
-        result = await captionController(captionArgs);
+        result = await captionTool(captionArgs);
         break;
       }
 
@@ -28,7 +28,7 @@ const getMcpToolsExecute = async (req, res) => {
         if (!args.text) {
           return res.status(400).send("Missing 'text' field in arguments for sentiment analysis");
         }
-        result = await sentimentController(args.text);
+        result = await sentimentTool(args);
         break;
       }
       default:

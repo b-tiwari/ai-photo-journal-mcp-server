@@ -1,6 +1,7 @@
 {
   "version": "0.1",
   "type": "tool",
+  "title": "Image Caption Generator Tool",
   "name": "generate_caption",
   "description": "Generates a descriptive caption for an image using OpenAI's vision model.",
   "model": "gpt-4o-mini",
@@ -9,14 +10,21 @@
     "type": "object",
     "properties": {
       "image": {
-        "description": "The input image to be captioned. Can be base64 or FormData.",
         "oneOf": [
-          { "type": "string", "format": "base64" },
-          { "type": "string", "format": "binary" }
-        ]
+            { "type": "string", "format": "base64" },
+            { "type": "string", "format": "binary" }
+        ],
+        "description": "Base64 encoded image data"
       },
-      "required": ["image"]
-    }
+      "imageBase64": {
+        "type": "string", 
+        "description": "Base64 encoded image data (alternative property name)"
+      }
+    },
+    "anyOf": [
+      { "required": ["image"] },
+      { "required": ["imageBase64"] }
+    ]
   },
 
   "output_schema": {
